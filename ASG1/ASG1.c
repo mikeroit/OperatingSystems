@@ -1,4 +1,5 @@
 #include <stdio.h>
+//new line
 
 //Submission Code:--------------------------------------------------------------
 
@@ -9,7 +10,9 @@
 //argv should contain the words
 int parse_command(char* inp, int* argc, char* argv[])
 {
+
 }
+
 
 //convert value into a number given by specified base
 //store conversion in str
