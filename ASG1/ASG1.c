@@ -50,6 +50,57 @@ int parse_command(char* inp, int* argc, char* argv[])
 //return a pointer to the value of str
 char* itoa(int value, char *str, int base)
 {
+    //base 2:
+    if(base == 2)
+    {
+        //find out how many bits we need
+        int numBits = 1;
+        int tempCounter = 1;
+        while(tempCounter*2 < value)
+        {
+            tempCounter *= 2;
+            numBits++;
+        }
+
+        char temp[numBits];
+        int v = value;
+        int i = 0;
+        while(v > 0)
+        {
+            char charToSet;
+            if((v % 2) != 0)
+            {
+                charToSet = '1';
+            }
+            else
+            {
+                charToSet = '0';
+            }
+
+            //set bit
+            temp[i] = charToSet;
+
+            i++;
+            v = v / 2;
+        }
+
+        //append the null character
+        temp[i] = '\0';
+
+        //write to str in reverse order
+        i = 0;
+        for(int j = numBits - 1; j >= 0; j--)
+        {
+            str[i] = temp[j];
+            i++;
+        }
+
+        //append the null character
+        str[i] = '\0';
+    }
+
+    return str;
+        
 }
 
 //write a function called printany that can print any primitive type
@@ -98,10 +149,21 @@ int test_parse_command()
     return 1;
 }
 
+int test_itoa()
+{
+    char* temp = (char*) malloc(32 * sizeof(char));
+
+    itoa(27, temp, 2);
+
+    printf("%s\n", temp);
+
+    return 1;
+}
+
 //END Testing:-------------------------------------------------------------------
 int main()
 {
-    test_parse_command();
+    test_itoa();
 
     return 0;
 }
