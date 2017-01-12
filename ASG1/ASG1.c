@@ -23,11 +23,18 @@ int parse_command(char* inp, int* argc, char* argv[])
         if(*ch != ' ')
         {
             //read the word
-            for(int i = 0; *ch != ' ' && *ch; i++)
+            //we need to keep the iterator in this scope so we can
+            //add the null character
+            int i = 0;
+            for(i; *ch != ' ' && *ch; i++)
             {
                 argv[*argc][i] = *ch;
                 ch++;
             }
+
+            //append the null character
+            argv[*argc][i] = '\0';
+
 
             //incriment argc
             *argc = *argc + 1;
@@ -58,28 +65,46 @@ void printany()
 //}
 
 //END Submission Code:-----------------------------------------------------------
-//
-//
 
-int main()
+
+//Testing:-----------------------------------------------------------------------
+int test_parse_command()
 {
-
-    char* test = "string 3 words";
+    char* test = "    this is   a test  123 23 bye ";
 
     int* num = malloc(sizeof(int));
     
-    char** res = malloc(3 * (sizeof(char*)));
+    char** res = malloc(7 * (sizeof(char*)));
     res[0] = (char*) malloc(20 * sizeof(char));
     res[1] = (char*) malloc(20 * sizeof(char));
     res[2] = (char*) malloc(20 * sizeof(char));
+    res[3] = (char*) malloc(20 * sizeof(char));
+    res[4] = (char*) malloc(20 * sizeof(char));
+    res[5] = (char*) malloc(20 * sizeof(char));
+    res[6] = (char*) malloc(20 * sizeof(char));
     
     parse_command(test, num, res);
 
     printf("%s\n", res[0]);
     printf("%s\n", res[1]);
     printf("%s\n", res[2]);
+    printf("%s\n", res[3]);
+    printf("%s\n", res[4]);
+    printf("%s\n", res[5]);
+    printf("%s\n", res[6]);
 
+    printf("%d\n", *num);
+
+    return 1;
+}
+
+//END Testing:-------------------------------------------------------------------
+int main()
+{
+    test_parse_command();
 
     return 0;
 }
+
+
 
