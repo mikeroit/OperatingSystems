@@ -50,57 +50,85 @@ int parse_command(char* inp, int* argc, char* argv[])
 //return a pointer to the value of str
 char* itoa(int value, char *str, int base)
 {
-    //base 2:
-    if(base == 2)
+    
+    //handle negative input
+    int setNeg = 0;
+    if(value < 0)
     {
-        //find out how many bits we need
-        int numBits = 1;
-        int tempCounter = 1;
-        while(tempCounter*2 < value)
+        value *= -1;
+        if(base == 10)
         {
-            tempCounter *= 2;
-            numBits++;
+            setNeg = 1;
         }
-
-        char temp[numBits];
-        int v = value;
-        int i = 0;
-        while(v > 0)
-        {
-            char charToSet;
-            if((v % 2) != 0)
-            {
-                charToSet = '1';
-            }
-            else
-            {
-                charToSet = '0';
-            }
-
-            //set bit
-            temp[i] = charToSet;
-
-            i++;
-            v = v / 2;
-        }
-
-        //append the null character
-        temp[i] = '\0';
-
-        //write to str in reverse order
-        i = 0;
-        for(int j = numBits - 1; j >= 0; j--)
-        {
-            str[i] = temp[j];
-            i++;
-        }
-
-        //append the null character
-        str[i] = '\0';
+    }
+    if(setNeg == 1)
+    {
+        str[0] = '-';
     }
 
-    return str;
-        
+    //our OS can't handle anything bigger than 0x7FFFFFFF
+    printf("%d\n", value);
+    value = value & 0x7FFFFFFF;
+
+    //handle value=0 as a special case
+    if(value == 0)
+    {
+       *str = '0';
+       return str;
+    }
+
+    
+
+    
+    //find out how many bits we need
+    int numBits = 1;
+    int tempCounter = 1;
+
+    while((tempCounter < 0x7FFFFFFF / base) && tempCounter*base < value)
+    {
+        tempCounter *= base;
+        numBits++;
+    }
+
+    //temp char to hold result
+    char temp[numBits];
+
+    //we need a mutable copy of value
+    int v = value;
+
+    //declare an indexer in this scope 
+    //so that we can append a null char after the loop
+    int i = setNeg;
+    while(v > 0)
+    {
+        char charToSet;
+        if((v % base) < 10)
+        {
+            charToSet = (char) (v % base) + 48;
+        }
+        else
+        {
+            charToSet = (char) (v % base) + 55;
+        }
+
+        //set bit
+        temp[i] = charToSet;
+
+        i++;
+        v = v / base;
+    }
+    //append the null character
+    temp[i] = '\0';
+
+    //write to str in reverse order
+    i = 0;
+    for(int j = numBits - 1; j >= 0; j--)
+    {
+        str[i] = temp[j];
+        i++;
+    }
+    //append the null character
+    str[i] = '\0';
 }
 
 //write a function called printany that can print any primitive type
@@ -151,9 +179,12 @@ int test_parse_command()
 
 int test_itoa()
 {
-    char* temp = (char*) malloc(32 * sizeof(char));
+    char* temp = (char*) malloc(64 * sizeof(char));
 
-    itoa(27, temp, 2);
+    itoa(1, temp, 10);
+    //itoa(0x7FFFFFFF, temp, 10);
+    //itoa(0x7FFFFFFF, temp, 8);
+    //itoa(0x7FFFFFFF, temp, 2);
 
     printf("%s\n", temp);
 
