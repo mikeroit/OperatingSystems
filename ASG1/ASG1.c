@@ -1,6 +1,20 @@
+//Note that only the testing code depends on these includes
+//(except for uses printf)
 #include <stdio.h>
 #include <stdlib.h>
-//new line
+
+//DESC struct for populate_desc()
+typedef struct
+{
+    unsigned short limit_0_15; //bits 0 - 15 of limit
+    unsigned short base_0_15; //bits 0 - 15 of base
+    unsigned char base_16_23; //bits 16 - 23 of base    
+    unsigned char limit_and_flag; //bits 16 to 19 of limit and 0 to 3 of flag
+    unsigned char base_24_31; //bits 16 to 19 of limit and 0 to 3 of flag
+    
+} DESC;
+
+
 
 //Submission Code:--------------------------------------------------------------
 
@@ -137,9 +151,21 @@ void printany()
 
 //write a function that takes 3 ints (base, flag, limit) and a DESC pointer to g
 //populate memory pointed to by g as per stuct in assignment
-//void populate_desc(int base, int limit, int flag, DESC *g)
-//{
-//}
+void populate_desc(int base, int limit, int flag, DESC *g)
+{
+    g->limit_0_15 = (unsigned short) (limit & 0x7FFF);
+    g->base_0_15 = (unsigned short) (base & 0x7FFF);
+    g->base_16_23 = (unsigned short) ((base >> 15) & 0xFF);
+
+    unsigned short flag_low_3 = flag & 7;
+    unsigned short limit_16_19 = (limit >> 15) & 0xF;
+
+    g->limit_and_flag = flag_low_3 | (limit_16_19 << 4);
+
+    g->base_24_31 = base >> 23;
+
+
+}
 
 //END Submission Code:-----------------------------------------------------------
 
@@ -301,10 +327,24 @@ void test_itoa()
 
 }
 
+void test_populate_desc()
+{
+    DESC* desc = malloc(sizeof(DESC*));
+    int b = 0xF0F0;
+    int l = 0xFF0F;
+    int f = 3;
+
+    populate_desc(b, l, f, desc);
+
+    printf("%d\n", desc->limit_0_15);
+}
 //END Testing:-------------------------------------------------------------------
 int main()
 {
-    test_itoa();
+    unsigned short x = 0x7FFF & 0x0F0F;
+
+    test_populate_desc();
+
 
     return 0;
 }
