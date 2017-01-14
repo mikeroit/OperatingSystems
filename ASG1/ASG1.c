@@ -50,7 +50,17 @@ int parse_command(char* inp, int* argc, char* argv[])
 //return a pointer to the value of str
 char* itoa(int value, char *str, int base)
 {
-    
+    //handle value=0 as a special case
+    if(value == 0)
+    {
+       *str = '0';
+       return str;
+    }
+
+    //find out how many bits we need
+    int numBits = 1;
+    int tempCounter = 1;
+
     //handle negative input
     int setNeg = 0;
     if(value < 0)
@@ -61,44 +71,32 @@ char* itoa(int value, char *str, int base)
             setNeg = 1;
         }
     }
-    if(setNeg == 1)
-    {
-        str[0] = '-';
-    }
 
-    //our OS can't handle anything bigger than 0x7FFFFFFF
-    printf("%d\n", value);
-    value = value & 0x7FFFFFFF;
-
-    //handle value=0 as a special case
-    if(value == 0)
-    {
-       *str = '0';
-       return str;
-    }
-
-    
-
-    
-    //find out how many bits we need
-    int numBits = 1;
-    int tempCounter = 1;
-
-    while((tempCounter < 0x7FFFFFFF / base) && tempCounter*base < value)
+    while((tempCounter < 0x7FFFFFFF / base) && tempCounter*base <= value)
     {
         tempCounter *= base;
         numBits++;
     }
 
-    //temp char to hold result
-    char temp[numBits];
+    //our OS can't handle anything bigger than 0x7FFFFFFF
+    value = value & 0x7FFFFFFF;
+
+    if(setNeg == 1)
+    {
+        str[0] = '-';
+        //numBits++;
+    }
+
 
     //we need a mutable copy of value
     int v = value;
 
+    //we need a temp char* for this
+    char temp[numBits];
+
     //declare an indexer in this scope 
     //so that we can append a null char after the loop
-    int i = setNeg;
+    int i = 0;
     while(v > 0)
     {
         char charToSet;
@@ -109,9 +107,9 @@ char* itoa(int value, char *str, int base)
         else
         {
             charToSet = (char) (v % base) + 55;
-        }
+       }
 
-        //set bit
+        //set char
         temp[i] = charToSet;
 
         i++;
@@ -121,7 +119,7 @@ char* itoa(int value, char *str, int base)
     temp[i] = '\0';
 
     //write to str in reverse order
-    i = 0;
+    i = setNeg;
     for(int j = numBits - 1; j >= 0; j--)
     {
         str[i] = temp[j];
@@ -177,18 +175,130 @@ int test_parse_command()
     return 1;
 }
 
-int test_itoa()
+void test_itoa()
 {
     char* temp = (char*) malloc(64 * sizeof(char));
 
-    itoa(1, temp, 10);
-    //itoa(0x7FFFFFFF, temp, 10);
-    //itoa(0x7FFFFFFF, temp, 8);
-    //itoa(0x7FFFFFFF, temp, 2);
+    //------------------------------------------------
+    //test value = 0
+    printf("testing base  2 --> value = %d\n", 0);
+    itoa(0, temp, 2);
+    printf("result: %s\n", temp);
 
-    printf("%s\n", temp);
+    printf("testing base  8 --> value = %d\n", 0);
+    itoa(0, temp, 8);
+    printf("result: %s\n", temp);
 
-    return 1;
+    printf("testing base  10 --> value = %d\n", 0);
+    itoa(0, temp, 10);
+    printf("result: %s\n", temp);
+
+    printf("testing base  16 --> value = %d\n", 0);
+    itoa(0, temp, 16);
+    printf("result: %s\n", temp);
+
+    printf("\n");
+
+    //------------------------------------------------
+    //test value = -30
+    printf("testing base  2 --> value = %d\n", -30);
+    itoa(-30, temp, 2);
+    printf("result: %s\n", temp);
+
+    printf("testing base  8 --> value = %d\n", -30);
+    itoa(-30, temp, 8);
+    printf("result: %s\n", temp);
+
+    printf("testing base  10 --> value = %d\n", -30);
+    itoa(-30, temp, 10);
+    printf("result: %s\n", temp);
+
+    printf("testing base  16 --> value = %d\n", -30);
+    itoa(-30, temp, 16);
+    printf("result: %s\n", temp);
+
+    printf("\n");
+
+    //------------------------------------------------
+    //test value = 255
+    printf("testing base  2 --> value = %d\n", 255);
+    itoa(255, temp, 2);
+    printf("result: %s\n", temp);
+
+    printf("testing base  8 --> value = %d\n", 255);
+    itoa(255, temp, 8);
+    printf("result: %s\n", temp);
+
+    printf("testing base  10 --> value = %d\n", 255);
+    itoa(255, temp, 10);
+    printf("result: %s\n", temp);
+
+    printf("testing base  16 --> value = %d\n", 255);
+    itoa(255, temp, 16);
+    printf("result: %s\n", temp);
+
+    printf("\n");
+
+    //------------------------------------------------
+    //test value = 256
+    printf("testing base  2 --> value = %d\n", 256);
+    itoa(256, temp, 2);
+    printf("result: %s\n", temp);
+
+    printf("testing base  8 --> value = %d\n", 256);
+    itoa(256, temp, 8);
+    printf("result: %s\n", temp);
+
+    printf("testing base  10 --> value = %d\n", 256);
+    itoa(256, temp, 10);
+    printf("result: %s\n", temp);
+
+    printf("testing base  16 --> value = %d\n", 256);
+    itoa(256, temp, 16);
+    printf("result: %s\n", temp);
+
+    printf("\n");
+
+    //------------------------------------------------
+    //test value = 257
+    printf("testing base  2 --> value = %d\n", 257);
+    itoa(257, temp, 2);
+    printf("result: %s\n", temp);
+
+    printf("testing base  8 --> value = %d\n", 257);
+    itoa(257, temp, 8);
+    printf("result: %s\n", temp);
+
+    printf("testing base  10 --> value = %d\n", 257);
+    itoa(257, temp, 10);
+    printf("result: %s\n", temp);
+
+    printf("testing base  16 --> value = %d\n", 257);
+    itoa(257, temp, 16);
+    printf("result: %s\n", temp);
+
+    printf("\n");
+
+    //------------------------------------------------
+    //test value = 0x7FFFFFFF (max int that we can handle)
+    printf("testing base  2 --> value = %d\n", 0x7FFFFFFF);
+    itoa(0x7FFFFFFF, temp, 2);
+    printf("result: %s\n", temp);
+
+    printf("testing base  8 --> value = %d\n", 0x7FFFFFFF);
+    itoa(0x7FFFFFFF, temp, 8);
+    printf("result: %s\n", temp);
+
+    printf("testing base  10 --> value = %d\n", 0x7FFFFFFF);
+    itoa(0x7FFFFFFF, temp, 10);
+    printf("result: %s\n", temp);
+
+    printf("testing base  16 --> value = %d\n", 0x7FFFFFFF);
+    itoa(0x7FFFFFFF, temp, 16);
+    printf("result: %s\n", temp);
+
+    printf("\n");
+
 }
 
 //END Testing:-------------------------------------------------------------------
