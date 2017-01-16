@@ -162,7 +162,7 @@ void populate_desc(int base, int limit, int flag, DESC *g)
 
     g->limit_and_flag = flag_low_3 | (limit_16_19 << 4);
 
-    g->base_24_31 = base >> 23;
+    g->base_24_31 = base >> 24;
 
 
 }
@@ -329,21 +329,48 @@ void test_itoa()
 
 void test_populate_desc()
 {
+    char* temp = malloc(sizeof(char) * 40);
+    //make a desc pointer to test on
     DESC* desc = malloc(sizeof(DESC*));
-    int b = 0xF0F0;
-    int l = 0xFF0F;
-    int f = 3;
+    int b;
+    int l;
+    int f;
 
+    //test all zeros
+    b = 0x0;
+    l = 0x0;
+    f = 0;
     populate_desc(b, l, f, desc);
+    printf("limit 0-15: %d\n", desc->limit_0_15);
+    printf("base 0-15: %d\n", desc->base_0_15);
+    printf("base 16-23: %d\n", desc->base_16_23);
+    printf("limit and flag: %d\n", desc->limit_and_flag);
+    printf("base 24-31: %d\n", desc->base_24_31);
+    printf("\n");
 
-    printf("%d\n", desc->limit_0_15);
+    //test a few reasonable inputs
+    b = 0x04030002; //should make base all 1's except most sig bit
+    l = 0x0001;
+    f = 3;
+    populate_desc(b, l, f, desc);
+    printf("limit 0-15: %d\n", desc->limit_0_15);
+    printf("base 0-15: %d\n", desc->base_0_15);
+    printf("base 16-23: %d\n", desc->base_16_23);
+    printf("limit and flag: %d\n", desc->limit_and_flag);
+    printf("base 24-31: %d\n", desc->base_24_31);
+
+
 }
+
 //END Testing:-------------------------------------------------------------------
 int main()
 {
     unsigned short x = 0x7FFF & 0x0F0F;
 
     test_populate_desc();
+
+
+
 
 
     return 0;
