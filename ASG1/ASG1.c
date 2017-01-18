@@ -200,238 +200,249 @@ void populate_desc(int base, int limit, int flag, DESC *g)
 
 
 //Testing:-----------------------------------------------------------------------
-//int test_parse_command()
-//{
-//    char* test = "    this is   a test  123 23 bye ";
-//
-//    int* num = malloc(sizeof(int));
-//    
-//    char** res = malloc(7 * (sizeof(char*)));
-//    res[0] = (char*) malloc(20 * sizeof(char));
-//    res[1] = (char*) malloc(20 * sizeof(char));
-//    res[2] = (char*) malloc(20 * sizeof(char));
-//    res[3] = (char*) malloc(20 * sizeof(char));
-//    res[4] = (char*) malloc(20 * sizeof(char));
-//    res[5] = (char*) malloc(20 * sizeof(char));
-//    res[6] = (char*) malloc(20 * sizeof(char));
-//    
-//    parse_command(test, num, res);
-//
-//    printf("%s\n", res[0]);
-//    printf("%s\n", res[1]);
-//    printf("%s\n", res[2]);
-//    printf("%s\n", res[3]);
-//    printf("%s\n", res[4]);
-//    printf("%s\n", res[5]);
-//    printf("%s\n", res[6]);
-//
-//    printf("%d\n", *num);
-//
-//    return 1;
-//}
-//
-//void test_itoa()
-//{
-//    char* temp = (char*) malloc(64 * sizeof(char));
-//
-//    //------------------------------------------------
-//    //test value = 0
-//    printf("testing base  2 --> value = %d\n", 0);
-//    itoa(0, temp, 2);
-//    printf("result: %s\n", temp);
-//
-//    printf("testing base  8 --> value = %d\n", 0);
-//    itoa(0, temp, 8);
-//    printf("result: %s\n", temp);
-//
-//    printf("testing base  10 --> value = %d\n", 0);
-//    itoa(0, temp, 10);
-//    printf("result: %s\n", temp);
-//
-//    printf("testing base  16 --> value = %d\n", 0);
-//    itoa(0, temp, 16);
-//    printf("result: %s\n", temp);
-//
-//    printf("\n");
-//
-//    //------------------------------------------------
-//    //test value = -30
-//    printf("testing base  2 --> value = %d\n", -30);
-//    itoa(-30, temp, 2);
-//    printf("result: %s\n", temp);
-//
-//    printf("testing base  8 --> value = %d\n", -30);
-//    itoa(-30, temp, 8);
-//    printf("result: %s\n", temp);
-//
-//    printf("testing base  10 --> value = %d\n", -30);
-//    itoa(-30, temp, 10);
-//    printf("result: %s\n", temp);
-//
-//    printf("testing base  16 --> value = %d\n", -30);
-//    itoa(-30, temp, 16);
-//    printf("result: %s\n", temp);
-//
-//    printf("\n");
-//
-//    //------------------------------------------------
-//    //test value = 255
-//    printf("testing base  2 --> value = %d\n", 255);
-//    itoa(255, temp, 2);
-//    printf("result: %s\n", temp);
-//
-//    printf("testing base  8 --> value = %d\n", 255);
-//    itoa(255, temp, 8);
-//    printf("result: %s\n", temp);
-//
-//    printf("testing base  10 --> value = %d\n", 255);
-//    itoa(255, temp, 10);
-//    printf("result: %s\n", temp);
-//
-//    printf("testing base  16 --> value = %d\n", 255);
-//    itoa(255, temp, 16);
-//    printf("result: %s\n", temp);
-//
-//    printf("\n");
-//
-//    //------------------------------------------------
-//    //test value = 256
-//    printf("testing base  2 --> value = %d\n", 256);
-//    itoa(256, temp, 2);
-//    printf("result: %s\n", temp);
-//
-//    printf("testing base  8 --> value = %d\n", 256);
-//    itoa(256, temp, 8);
-//    printf("result: %s\n", temp);
-//
-//    printf("testing base  10 --> value = %d\n", 256);
-//    itoa(256, temp, 10);
-//    printf("result: %s\n", temp);
-//
-//    printf("testing base  16 --> value = %d\n", 256);
-//    itoa(256, temp, 16);
-//    printf("result: %s\n", temp);
-//
-//    printf("\n");
-//
-//    //------------------------------------------------
-//    //test value = 257
-//    printf("testing base  2 --> value = %d\n", 257);
-//    itoa(257, temp, 2);
-//    printf("result: %s\n", temp);
-//
-//    printf("testing base  8 --> value = %d\n", 257);
-//    itoa(257, temp, 8);
-//    printf("result: %s\n", temp);
-//
-//    printf("testing base  10 --> value = %d\n", 257);
-//    itoa(257, temp, 10);
-//    printf("result: %s\n", temp);
-//
-//    printf("testing base  16 --> value = %d\n", 257);
-//    itoa(257, temp, 16);
-//    printf("result: %s\n", temp);
-//
-//    printf("\n");
-//
-//    //------------------------------------------------
-//    //test value = 0x7FFFFFFF (max int that we can handle)
-//    printf("testing base  2 --> value = %d\n", 0x7FFFFFFF);
-//    itoa(0x7FFFFFFF, temp, 2);
-//    printf("result: %s\n", temp);
-//
-//    printf("testing base  8 --> value = %d\n", 0x7FFFFFFF);
-//    itoa(0x7FFFFFFF, temp, 8);
-//    printf("result: %s\n", temp);
-//
-//    printf("testing base  10 --> value = %d\n", 0x7FFFFFFF);
-//    itoa(0x7FFFFFFF, temp, 10);
-//    printf("result: %s\n", temp);
-//
-//    printf("testing base  16 --> value = %d\n", 0x7FFFFFFF);
-//    itoa(0x7FFFFFFF, temp, 16);
-//    printf("result: %s\n", temp);
-//
-//    printf("\n");
-//
-//}
-//
-//void test_populate_desc()
-//{
-//    char* temp = malloc(sizeof(char) * 40);
-//    //make a desc pointer to test on
-//    DESC* desc = malloc(sizeof(DESC*));
-//    int b;
-//    int l;
-//    int f;
-//
-//    //test all zeros
-//    b = 0x0;
-//    l = 0x0;
-//    f = 0;
-//    populate_desc(b, l, f, desc);
-//    printf("limit 0-15: %d\n", desc->limit_0_15);
-//    printf("base 0-15: %d\n", desc->base_0_15);
-//    printf("base 16-23: %d\n", desc->base_16_23);
-//    printf("limit and flag: %d\n", desc->limit_and_flag);
-//    printf("base 24-31: %d\n", desc->base_24_31);
-//    printf("\n");
-//
-//    //test a few reasonable inputs
-//    b = 0x04030002; //should make base all 1's except most sig bit
-//    l = 0x0001;
-//    f = 3;
-//    populate_desc(b, l, f, desc);
-//    printf("limit 0-15: %d\n", desc->limit_0_15);
-//    printf("base 0-15: %d\n", desc->base_0_15);
-//    printf("base 16-23: %d\n", desc->base_16_23);
-//    printf("limit and flag: %d\n", desc->limit_and_flag);
-//    printf("base 24-31: %d\n", desc->base_24_31);
-//
-//
-//}
-//
-//void test_printany()
-//{
-//
-//    int* i = malloc(sizeof(int));
-//    char* c = malloc(sizeof(char));
-//    long* l = malloc(sizeof(long));
-//    unsigned* u = malloc(sizeof(unsigned));
-//    float* f = malloc(sizeof(float));
-//
-//    //test all zeros
-//    *i = 0;
-//    *c = 0;
-//    *l = 0;
-//    *u = 0;
-//    *f = 0;
-//    printany(i, 'I');
-//    printany(c, 'C');
-//    printany(l, 'L');
-//    printany(u , 'U');
-//    printany(f, 'F');
-//    printf("\n");
-//
-//    //test reasonable vals 
-//    *i = 48; //should print 48
-//    *c = 'M'; //should print 77
-//    *l = 0x1FFFFFFFFFF; //should print 8589934591
-//    *u = 0xFFFFFFFF; //should print 4294967295
-//    *f = 12.4; //should print 12.4
-//    printany(i, 'I');
-//    printany(c, 'C');
-//    printany(l, 'L');
-//    printany(u , 'U');
-//    printany(f, 'F');
-//
-//
-//}
+int test_parse_command()
+{
+    printf("TESTING PARSE COMMAND\n\n");
+    char* test = "    this is   a test  123 23 bye ";
+
+    int* num = malloc(sizeof(int));
+    
+    char** res = malloc(7 * (sizeof(char*)));
+    res[0] = (char*) malloc(20 * sizeof(char));
+    res[1] = (char*) malloc(20 * sizeof(char));
+    res[2] = (char*) malloc(20 * sizeof(char));
+    res[3] = (char*) malloc(20 * sizeof(char));
+    res[4] = (char*) malloc(20 * sizeof(char));
+    res[5] = (char*) malloc(20 * sizeof(char));
+    res[6] = (char*) malloc(20 * sizeof(char));
+    
+    parse_command(test, num, res);
+
+    printf("%s\n", res[0]);
+    printf("%s\n", res[1]);
+    printf("%s\n", res[2]);
+    printf("%s\n", res[3]);
+    printf("%s\n", res[4]);
+    printf("%s\n", res[5]);
+    printf("%s\n", res[6]);
+
+    printf("%d\n\n\n", *num);
+
+    return 1;
+}
+
+void test_itoa()
+{
+    printf("TESTIONG ITOA\n\n");
+
+    char* temp = (char*) malloc(64 * sizeof(char));
+
+    //------------------------------------------------
+    //test value = 0
+    printf("testing base  2 --> value = %d\n", 0);
+    itoa(0, temp, 2);
+    printf("result: %s\n", temp);
+
+    printf("testing base  8 --> value = %d\n", 0);
+    itoa(0, temp, 8);
+    printf("result: %s\n", temp);
+
+    printf("testing base  10 --> value = %d\n", 0);
+    itoa(0, temp, 10);
+    printf("result: %s\n", temp);
+
+    printf("testing base  16 --> value = %d\n", 0);
+    itoa(0, temp, 16);
+    printf("result: %s\n", temp);
+
+    printf("\n");
+
+    //------------------------------------------------
+    //test value = -30
+    printf("testing base  2 --> value = %d\n", -30);
+    itoa(-30, temp, 2);
+    printf("result: %s\n", temp);
+
+    printf("testing base  8 --> value = %d\n", -30);
+    itoa(-30, temp, 8);
+    printf("result: %s\n", temp);
+
+    printf("testing base  10 --> value = %d\n", -30);
+    itoa(-30, temp, 10);
+    printf("result: %s\n", temp);
+
+    printf("testing base  16 --> value = %d\n", -30);
+    itoa(-30, temp, 16);
+    printf("result: %s\n", temp);
+
+    printf("\n");
+
+    //------------------------------------------------
+    //test value = 255
+    printf("testing base  2 --> value = %d\n", 255);
+    itoa(255, temp, 2);
+    printf("result: %s\n", temp);
+
+    printf("testing base  8 --> value = %d\n", 255);
+    itoa(255, temp, 8);
+    printf("result: %s\n", temp);
+
+    printf("testing base  10 --> value = %d\n", 255);
+    itoa(255, temp, 10);
+    printf("result: %s\n", temp);
+
+    printf("testing base  16 --> value = %d\n", 255);
+    itoa(255, temp, 16);
+    printf("result: %s\n", temp);
+
+    printf("\n");
+
+    //------------------------------------------------
+    //test value = 256
+    printf("testing base  2 --> value = %d\n", 256);
+    itoa(256, temp, 2);
+    printf("result: %s\n", temp);
+
+    printf("testing base  8 --> value = %d\n", 256);
+    itoa(256, temp, 8);
+    printf("result: %s\n", temp);
+
+    printf("testing base  10 --> value = %d\n", 256);
+    itoa(256, temp, 10);
+    printf("result: %s\n", temp);
+
+    printf("testing base  16 --> value = %d\n", 256);
+    itoa(256, temp, 16);
+    printf("result: %s\n", temp);
+
+    printf("\n");
+
+    //------------------------------------------------
+    //test value = 257
+    printf("testing base  2 --> value = %d\n", 257);
+    itoa(257, temp, 2);
+    printf("result: %s\n", temp);
+
+    printf("testing base  8 --> value = %d\n", 257);
+    itoa(257, temp, 8);
+    printf("result: %s\n", temp);
+
+    printf("testing base  10 --> value = %d\n", 257);
+    itoa(257, temp, 10);
+    printf("result: %s\n", temp);
+
+    printf("testing base  16 --> value = %d\n", 257);
+    itoa(257, temp, 16);
+    printf("result: %s\n", temp);
+
+    printf("\n");
+
+    //------------------------------------------------
+    //test value = 0x7FFFFFFF (max int that we can handle)
+    printf("testing base  2 --> value = %d\n", 0x7FFFFFFF);
+    itoa(0x7FFFFFFF, temp, 2);
+    printf("result: %s\n", temp);
+
+    printf("testing base  8 --> value = %d\n", 0x7FFFFFFF);
+    itoa(0x7FFFFFFF, temp, 8);
+    printf("result: %s\n", temp);
+
+    printf("testing base  10 --> value = %d\n", 0x7FFFFFFF);
+    itoa(0x7FFFFFFF, temp, 10);
+    printf("result: %s\n", temp);
+
+    printf("testing base  16 --> value = %d\n", 0x7FFFFFFF);
+    itoa(0x7FFFFFFF, temp, 16);
+    printf("result: %s\n", temp);
+
+    printf("\n\n");
+
+}
+
+void test_populate_desc()
+{
+    printf("TESTING POPULATE DESC\n\n");
+    
+    char* temp = malloc(sizeof(char) * 40);
+    //make a desc pointer to test on
+    DESC* desc = malloc(sizeof(DESC*));
+    int b;
+    int l;
+    int f;
+
+    //test all zeros
+    b = 0x0;
+    l = 0x0;
+    f = 0;
+    populate_desc(b, l, f, desc);
+    printf("limit 0-15: %d\n", desc->limit_0_15);
+    printf("base 0-15: %d\n", desc->base_0_15);
+    printf("base 16-23: %d\n", desc->base_16_23);
+    printf("limit and flag: %d\n", desc->limit_and_flag);
+    printf("base 24-31: %d\n", desc->base_24_31);
+    printf("\n");
+
+    //test a few reasonable inputs
+    b = 0x04030002; //should make base all 1's except most sig bit
+    l = 0x0001;
+    f = 3;
+    populate_desc(b, l, f, desc);
+    printf("limit 0-15: %d\n", desc->limit_0_15);
+    printf("base 0-15: %d\n", desc->base_0_15);
+    printf("base 16-23: %d\n", desc->base_16_23);
+    printf("limit and flag: %d\n", desc->limit_and_flag);
+    printf("base 24-31: %d\n", desc->base_24_31);
+    printf("\n\n");
+
+
+}
+
+void test_printany()
+{
+    printf("TESTING PRINT ANY\n\n");
+
+    int* i = malloc(sizeof(int));
+    char* c = malloc(sizeof(char));
+    long* l = malloc(sizeof(long));
+    unsigned* u = malloc(sizeof(unsigned));
+    float* f = malloc(sizeof(float));
+
+    //test all zeros
+    *i = 0;
+    *c = 0;
+    *l = 0;
+    *u = 0;
+    *f = 0;
+    printany(i, 'I');
+    printany(c, 'C');
+    printany(l, 'L');
+    printany(u , 'U');
+    printany(f, 'F');
+    printf("\n");
+
+    //test reasonable vals 
+    *i = 48; //should print 48
+    *c = 'M'; //should print 77
+    *l = 0x1FFFFFFFFFF; //should print 8589934591
+    *u = 0xFFFFFFFF; //should print 4294967295
+    *f = 12.4; //should print 12.4
+    printany(i, 'I');
+    printany(c, 'C');
+    printany(l, 'L');
+    printany(u , 'U');
+    printany(f, 'F');
+
+
+}
 //END Testing:-------------------------------------------------------------------
+
 int main()
 {
-    unsigned short x = 0x7FFF & 0x0F0F;
 
+    test_parse_command();
+    test_itoa();
+    test_printany();
+    test_populate_desc();
 
     return 0;
 }
