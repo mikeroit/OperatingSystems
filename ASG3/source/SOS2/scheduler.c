@@ -1,3 +1,6 @@
+//Michael Roitman
+// 872761096
+
 ////////////////////////////////////////////////////////
 // A Round-Robin Scheduler with 50% share to console
 // 
@@ -30,6 +33,12 @@ PCB *add_to_processq(PCB *p) {
 	// if the process queue is non-empty, p should be added immediately
 	// before processq_next
 	// For details, read assignment background material
+    //------------------------------------------------------------------
+    
+    //need to handle 2 possible cases:
+    //  1 --> list is empty (processq_next == null)
+    //  3 --> list is non-empty (
+    
 
 	enable_interrupts();
 
